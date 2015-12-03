@@ -1,0 +1,20 @@
+input.upload-docx-file {
+    opacity: 0;
+    display: inline;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    margin-top: -6px;
+	cursor: pointer!important;
+}
+
+/* position class */
+.relative {
+	position: relative;
+}
+
+/* display class */
+.inline {
+	display: inline;
+}
