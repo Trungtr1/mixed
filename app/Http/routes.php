@@ -24,6 +24,8 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::get('/home', ['uses' => 'HomeController@index']);
 
+Route::get('/introduce', ['uses' => 'HomeController@introduce']);
+
 Route::get('/login', ['uses' => 'Auth\AuthController@login', 'middleware' => ['guest']]);
 
 Route::post('/login', ['uses' => 'Auth\AuthController@authenticate', 'middleware' => ['guest']]);

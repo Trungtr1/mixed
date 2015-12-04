@@ -66,7 +66,8 @@
 										<li><a href="/home">Trang chủ</a></li>
 										@if (Auth::check())	
 											<li><a href="/user">Trang cá nhân</a></li>
-										@endif																	
+										@endif
+										<li><a href="/introduce">Giới thiệu</a></li>
 									</ul>
 									<ul class="nav navbar-nav navbar-right">
 										@if (Auth::check())	

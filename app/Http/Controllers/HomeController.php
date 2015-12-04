@@ -15,4 +15,8 @@ use Session;
 			return view('pages.home');
 		}
 		
+		public function introduce()
+		{
+			return view('introduce');
+		}
 	}
