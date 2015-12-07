@@ -88,12 +88,23 @@
 							</div>
 						</div>
 						<div class="row" style="padding:0px">
-							<div class="col-lg-6 col-md-6" style="padding:0px">
+							<div class="col-lg-7 col-md-7" style="padding:0px">
 								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-folder-open"></span> &nbsp;Tạo Thư Mục</button>
 								<button type="button" class="btn btn-info" data-toggle="modal" data-target="#addfile"><span class="glyphicon glyphicon-file"></span> &nbsp;Tạo File</button>
 								<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#addGroup"><span class="glyphicon glyphicon-user"></span> &nbsp;Tạo Nhóm</button>
+								{!! Form::open(array('route' => 'cut', 'method' => 'POST', 'class' => 'inline', 'id' => 'cut', 'files' => 'true' )) !!}
+									<input type="hidden" class="form-control" name="objects" id="objects" value="" />
+									<input type="submit" class="btn btn-default" name="cutting" id="cutting" value="Cắt" />
+								{!! Form::close() !!}
+								<?php if(isset($data['objects_cut'])){ ?>
+								{!! Form::open(array('route' => 'paste', 'method' => 'POST', 'class' => 'inline', 'id' => 'paste', 'files' => 'true' )) !!}
+									<input type="hidden" class="form-control" name="objects" id="objects" value="<?php echo $data['objects_cut'] ?>" />
+									<input type="hidden" class="form-control" name="user_id" id="user_id" value="<?php echo $data['objects_cut'] ?>" />				
+									<input type="submit" class="btn btn-primary" name="paste" id="paste" value="Dán" />
+								{!! Form::close() !!}
+								<?php } ?>
 							</div>
-							<div class="col-lg-6 col-md-6" style="padding:0px">
+							<div class="col-lg-5 col-md-5" style="padding:0px">
 								<button type="button" class="btn btn-danger" style="float:right;" data-toggle="modal" data-target="#modal_mixed"><span class="glyphicon glyphicon-refresh"></span> &nbsp;Trộn đề</button>
 							</div>
 						</div>
@@ -107,7 +118,10 @@
 										<table style="width:100%;padding:0px">
 											<?php foreach($data['folders'] as $fd){ ?>
 												<tr class="groups">
-													<td style="border-bottom:1px solid #ccc"><a href="/folder?id=<?php echo $fd['id'] ?>" style="font-size:11pt"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<?php echo $fd['name'] ?></a></td>
+													<td style="border-bottom:1px solid #ccc">
+														<input type="checkbox"  name="choosetest[]" value="<?php echo $fd['id'] ?>" class="cht"/>&nbsp;&nbsp;
+														<a href="/folder?id=<?php echo $fd['id'] ?>" style="font-size:11pt"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<?php echo $fd['name'] ?></a>
+													</td>
 													<td style="border-bottom:1px solid #ccc;text-align:center;width:150px;">
 														<span style="color:#A9A9A9"><?php echo $fd['date'] ?><span>
 													</td>
@@ -127,7 +141,7 @@
 											<?php foreach($data['files'] as $fi){ ?>
 												<tr class="groups">
 													<td style="border-bottom:1px solid #ccc">
-														<input type="checkbox"  name="choosetest[]" value="<?php echo $fi['id'] ?>" />&nbsp;&nbsp;
+														<input type="checkbox"  name="choosetest[]" value="<?php echo $fi['id'] ?>" class="cht"/>&nbsp;&nbsp;
 														<a href="/file?id=<?php echo $fi['id'] ?>" style="font-size:11pt;"><span class="glyphicon glyphicon-list-alt" style="color:#000"></span>&nbsp;&nbsp;<?php echo $fi['name'] ?></a>
 													</td>
 													<td style="border-bottom:1px solid #ccc;text-align:center;width:150px;">
@@ -331,6 +345,15 @@
 	})
 	$(document).on('click','#submit_file',function(){
 		$('#frm_newfile').submit();
+	})	
+	$(document).on('click','#cutting',function(){
+		$objects = $('#objects').val();
+		$('.cht').each(function(){
+			if(this.checked==true){
+				$objects = $objects+" "+$(this).val();
+			}
+		})
+		$('#objects').val($objects);
 	})
 </script>
 @endsection

@@ -15,6 +15,11 @@ use File;
 		{
 			$user = Session::get('user');
 			
+			if(Session::has('objects_cut')){
+				$objects_cut = Session::get('objects_cut');
+				$viewData['objects_cut'] = $objects_cut;
+			}
+			
 			$viewData['user']=$user;
 			
 			$action = $request->get('action');

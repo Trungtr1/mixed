@@ -12,13 +12,18 @@ use File;
 
 	class FolderController extends Controller {
 		
-		public function index(Request $request)		
+		public function index(Request $request)				
 		{
 			$id = $request->get('id');
 			
 			$action = $request->get('action');						
 			
 			$user = Session::get('user');
+			
+			if(Session::has('objects_cut')){
+				$objects_cut = Session::get('objects_cut');
+				$viewData['objects_cut'] = $objects_cut;
+			}
 			
 			if($action=='delete')
 			{

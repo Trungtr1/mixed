@@ -63,3 +63,7 @@ Route::get('/answer', ['uses' => 'TestController@answers', 'middleware' => ['aut
 Route::get('/register', ['uses' => 'RegisterController@index', 'middleware' => ['guest']]);
 
 Route::post('/register', ['uses' => 'RegisterController@creat_account', 'middleware' => ['guest']]);
+
+Route::post('/cut',['as' => 'cut','uses' => 'SystemController@cut', 'middleware' => ['auth']]);
+
+Route::post('/paste',['as' => 'paste','uses' => 'SystemController@paste', 'middleware' => ['auth']]);

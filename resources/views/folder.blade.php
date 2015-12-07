@@ -88,10 +88,22 @@
 					<div class="col-lg-2 col-md-2" style="padding:0px">
 						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-folder-open"></span> &nbsp;Tạo Thư Mục</button>
 					</div>
-					<div class="col-lg-2 col-md-2" style="padding:0px">
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#addfile"><span class="glyphicon glyphicon-file"></span> &nbsp;Tạo File</button>
-					</div>
-					<div class="col-lg-8 col-md-8" style="padding:0px">
+					<div class="col-lg-4 col-md-4" style="padding:0px">
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#addfile"><span class="glyphicon glyphicon-file"></span> &nbsp;Tạo File</button>&nbsp;
+						{!! Form::open(array('route' => 'cut', 'method' => 'POST', 'class' => 'inline', 'id' => 'cut', 'files' => 'true' )) !!}
+							<input type="hidden" class="form-control" name="objects" id="objects" value="" />
+							<input type="submit" class="btn btn-default" name="cutting" id="cutting" value="Cắt" />&nbsp;
+						{!! Form::close() !!}
+						<?php if(isset($data['objects_cut'])){ ?>						
+						{!! Form::open(array('route' => 'paste', 'method' => 'POST', 'class' => 'inline', 'id' => 'paste', 'files' => 'true' )) !!}
+							<input type="hidden" class="form-control" name="objects" id="objects" value="<?php echo $data['objects_cut'] ?>" />
+							<input type="hidden" class="form-control" name="id_folder" id="id_folder" value="<?php echo $data['folder'][0]['id'] ?>" />
+							<input type="hidden" class="form-control" name="level_folder" id="level_folder" value="<?php echo $data['folder'][0]['level'] ?>" />
+							<input type="submit" class="btn btn-primary" name="paste" id="paste" value="Dán" />
+						{!! Form::close() !!}
+						<?php } ?>
+					</div>					
+					<div class="col-lg-6 col-md-6" style="padding:0px">
 						<button type="button" class="btn btn-danger" style="float:right;" data-toggle="modal" data-target="#modal_mixed"><span class="glyphicon glyphicon-refresh"></span> &nbsp;Trộn đề</button>
 					</div>
 				</div>
@@ -104,8 +116,11 @@
 							{!! Form::open(array('route' => 'mix.to.folder', 'method' => 'POST', 'class' => 'inline', 'id' => 'mix-question-form', 'files' => 'true' )) !!}
 								<table style="width:100%;padding:0px">
 									<?php foreach($data['children'] as $ch){ ?>
-										<tr class="groups">
-											<td style="border-bottom:1px solid #ccc"><a href="/folder?id=<?php echo $ch['id'] ?>" style="font-size:11pt"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<?php echo $ch['name'] ?></a></td>
+										<tr class="groups">											
+											<td style="border-bottom:1px solid #ccc">
+											<input type="checkbox"  name="choosetest[]" value="<?php echo $fd['id'] ?>" class="cht"/>&nbsp;&nbsp;
+											<a href="/folder?id=<?php echo $ch['id'] ?>" style="font-size:11pt"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<?php echo $ch['name'] ?></a>
+											</td>
 											<td style="border-bottom:1px solid #ccc;text-align:center;width:150px;">
 												<span style="color:#A9A9A9"><?php echo $ch['date'] ?><span>
 											</td>
@@ -125,7 +140,7 @@
 									<?php foreach($data['files'] as $fi){ ?>
 										<tr class="groups">
 											<td style="border-bottom:1px solid #ccc">
-												<input type="checkbox"  name="choosetest[]" value="<?php echo $fi['id'] ?>" />&nbsp;&nbsp;
+												<input type="checkbox"  name="choosetest[]" value="<?php echo $fi['id'] ?>" class="cht"/>&nbsp;&nbsp;
 												<a href="/file?id=<?php echo $fi['id'] ?>" style="font-size:11pt;"><span class="glyphicon glyphicon-list-alt" style="color:#000"></span>&nbsp;&nbsp;<?php echo $fi['name'] ?></a>
 											</td>
 											<td style="border-bottom:1px solid #ccc;text-align:center;width:150px;">
@@ -284,7 +299,15 @@
 		
 		}
 	});
-	
+	$(document).on('click','#cutting',function(){
+		$objects = $('#objects').val();
+		$('.cht').each(function(){
+			if(this.checked==true){
+				$objects = $objects+" "+$(this).val();
+			}
+		})
+		$('#objects').val($objects);
+	})
 	
 </script>
 @endsection
