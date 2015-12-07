@@ -67,7 +67,7 @@
 										@if (Auth::check())	
 											<li><a href="/user">Trang cá nhân</a></li>
 										@endif
-										<li><a href="/introduce">Giới thiệu</a></li>
+										<li><a href="/manual">Hướng dẫn sử dụng</a></li>
 									</ul>
 									<ul class="nav navbar-nav navbar-right">
 										@if (Auth::check())	

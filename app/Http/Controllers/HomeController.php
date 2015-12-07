@@ -19,4 +19,9 @@ use Session;
 		{
 			return view('introduce');
 		}
+		
+		public function manual()
+		{
+			return view('manual');
+		}
 	}
