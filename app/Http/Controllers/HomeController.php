@@ -24,4 +24,9 @@ use Session;
 		{
 			return view('manual');
 		}
+		
+		public function download()
+		{
+			return view('pages.download');
+		}
 	}

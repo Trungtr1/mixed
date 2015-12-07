@@ -28,6 +28,8 @@ Route::get('/introduce', ['uses' => 'HomeController@introduce']);
 
 Route::get('/manual', ['uses' => 'HomeController@manual']);
 
+Route::get('/downloadmanual', ['uses' => 'HomeController@download']);
+
 Route::get('/login', ['uses' => 'Auth\AuthController@login', 'middleware' => ['guest']]);
 
 Route::post('/login', ['uses' => 'Auth\AuthController@authenticate', 'middleware' => ['guest']]);

@@ -62,6 +62,7 @@
 										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/upload2.png')}}" alt="..."></li>
 										<li>Sau khi upload thành công kết quả sẽ hiện như hình bên dưới:</li>
 										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/file_2.png')}}" alt="..."></li>
+										<li>Mẫu file upload <a href="/downloadmanual">tải về</a>:</li>
 									</ul>
 								</li>
 								<li style="margin-top:20px;">
