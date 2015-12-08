@@ -118,7 +118,7 @@
 									<?php foreach($data['children'] as $ch){ ?>
 										<tr class="groups">											
 											<td style="border-bottom:1px solid #ccc">
-											<input type="checkbox"  name="choosetest[]" value="<?php echo $fd['id'] ?>" class="cht"/>&nbsp;&nbsp;
+											<input type="checkbox"  name="choosetest[]" value="<?php echo $ch['id'] ?>" class="cht"/>&nbsp;&nbsp;
 											<a href="/folder?id=<?php echo $ch['id'] ?>" style="font-size:11pt"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<?php echo $ch['name'] ?></a>
 											</td>
 											<td style="border-bottom:1px solid #ccc;text-align:center;width:150px;">
