@@ -18,7 +18,9 @@
 					<div class="col-lg-12 col-md-12">
 						<br>
 						<div class="row" style="text-align: justify;">
-							<ol class="list" style="list-style-type: upper-roman;font-size:17px;padding:20px">
+							<span style="font-size:25px;">Mẫu file upload câu hỏi <a href="/downloadmanual">tải về</a></span>
+							<hr/>
+							<ol class="list" style="list-style-type: upper-roman;font-size:17px;padding:10px 20px 20px 20px">
 								<li>
 									<b style="color:#428BCA">ĐĂNG NHẬP - ĐĂNG XUẤT</b>
 									<ul>
@@ -61,8 +63,7 @@
 										<li>Bước 2: Chọn upload, sau đó tìm file word các bạn muốn upload lên.</li>
 										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/upload2.png')}}" alt="..."></li>
 										<li>Sau khi upload thành công kết quả sẽ hiện như hình bên dưới:</li>
-										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/file_2.png')}}" alt="..."></li>
-										<li>Mẫu file upload <a href="/downloadmanual">tải về</a>:</li>
+										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/file_2.png')}}" alt="..."></li>										
 									</ul>
 								</li>
 								<li style="margin-top:20px;">
