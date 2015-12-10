@@ -38,8 +38,6 @@ Route::get('/logout', ['uses' => 'Auth\AuthController@logout', 'middleware' => [
 
 Route::get('/user', ['uses' => 'UserController@index', 'middleware' => ['auth']]);
 
-Route::post('/user',['uses' => 'UserController@create_folder', 'middleware' => ['auth']]);
-
 Route::get('/folder',['uses' => 'FolderController@index', 'middleware' => ['auth']]);
 
 Route::post('/folder',['as' => 'add.folder','uses' => 'FolderController@create_folder', 'middleware' => ['auth']]);
@@ -54,6 +52,10 @@ Route::post('/file',['as' => 'add.file','uses' => 'FileController@create_file', 
 
 Route::get('/group',['uses' => 'GroupController@index', 'middleware' => ['auth']]);
 
+Route::post('/group',['as' => 'add.group','uses' => 'GroupController@create_group', 'middleware' => ['auth']]);
+
+Route::post('/group/invite',['as' => 'invite','uses' => 'GroupController@invite', 'middleware' => ['auth']]);
+
 Route::get('/test', ['uses' => 'TestController@index', 'middleware' => ['auth']]);
 
 Route::post('/test', ['uses' => 'TestController@download_test', 'middleware' => ['auth']]);
@@ -67,3 +69,5 @@ Route::post('/register', ['uses' => 'RegisterController@creat_account', 'middlew
 Route::post('/cut',['as' => 'cut','uses' => 'SystemController@cut', 'middleware' => ['auth']]);
 
 Route::post('/paste',['as' => 'paste','uses' => 'SystemController@paste', 'middleware' => ['auth']]);
+
+Route::get('/admin', ['uses' => 'AdminController@index', 'middleware' => ['auth', 'role:3']]);
