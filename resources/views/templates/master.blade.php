@@ -2,12 +2,13 @@
     <head>
         <title>@yield('title')</title>
 		<link rel="stylesheet" href="{{ asset('public/css/bootstrap.css') }}">
+		<link rel="stylesheet" href="{{ asset('public/css/dataTables.bootstrap.min.css') }}">
 		<link rel="stylesheet" href="{{ asset('public/css/app.css') }}">
-		<link rel="stylesheet" href="{{ asset('public/css/jquery.dataTables.min.css') }}">
 		
 		<script src="{{ asset('public/js/jquery.min.js') }}"></script>
 		<script src="{{ asset('public/js/bootstrap.min.js') }}"></script>
 		<script src="{{ asset('public/js/jquery.dataTables.min.js') }}"></script>
+		<script src="{{ asset('public/js/dataTables.bootstrap.min.js') }}"></script>
 		<script src="{{ asset('public/js/app.js?v=1.1') }}"></script>
     </head>
     <!--<body style="background-color:#F5F5F5;">-->
@@ -15,6 +16,11 @@
 		<style>
 			#header{
 				background-color:#428bca;
+				position: fixed;
+				top:0px;
+				left: 0;
+				width:100%;
+				z-index:100;
 			}
 			.pd0{
 				padding:0px;
@@ -30,6 +36,15 @@
 			}
 			.navbar-nav li a{
 				line-height:30px;
+			}
+			#footer{				
+				background: #f5f5f5;
+				color: #fff;
+				position: fixed;
+				padding: 10px 0;
+				left: 0;
+				bottom: 0px;
+				width:100%
 			}
 		</style>
 		<div id="header" >
@@ -58,7 +73,7 @@
 										<span class="icon-bar"></span>
 										<span class="icon-bar"></span>
 									</button>
-									<a class="navbar-brand" href="/home">MIXED</a>									
+									<a class="navbar-brand" href="/home">TRONDE</a>									
 								</div>
 								<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 									<ul class="nav navbar-nav">
@@ -68,6 +83,9 @@
 											<li><a href="/user">Trang cá nhân</a></li>
 										@endif
 										<li><a href="/manual">Hướng dẫn sử dụng</a></li>
+										@if (Auth::check() && Auth::user()->role==3)
+											<li><a href="/admin">&nbsp;Admin</a></li>
+										@endif	
 									</ul>
 									<ul class="nav navbar-nav navbar-right">
 										@if (Auth::check())	
@@ -83,7 +101,7 @@
 				</div>				
 			</div>	
 		</div>
-		<div id="main-content">			
+		<div id="main-content" style="margin-top:50px;">			
 			<div class="row">
 				<div class="col-lg-12 col-md-12 pd0">
 					@yield('content')
@@ -104,6 +122,9 @@
 				  ga('send', 'pageview');
 				</script>
 			<?php endif; ?>
+			<div class="container">
+				<p class="text-muted">Copyright PLS © 2015 - Developed by PLS Team | Supported by <a href="http://www.vnfoundation.org/" target="_blank">The Vietnam Foundation</a></p>
+			</div>
 		</div>
 	</body>
 </html>

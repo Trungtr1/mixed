@@ -39,6 +39,8 @@ use Hash;
 				
 				$inputData['password'] = Hash::make($request['password']);
 				
+				$inputData['role'] = 1;
+				
 				if (DB::table('users')->insert($inputData)) {
 		
 				return \Redirect('/login')->with('responseData', array('statusCode' => 1, 'message' => 'Thêm mới thành công'));
