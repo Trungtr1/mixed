@@ -274,7 +274,7 @@
 			<div class="modal-body">
 				{!! Form::open(array('route'=>'add.group','method' => 'POST','id'=>'frm_addGroup')) !!}
 					<div class="row">
-						<label>Tên Nhóm:</label>
+						<label>Tên Nhóm</label>
 					</div>
 					<div class="row">
 						<input type="text" name="group_name" class="form-control" value="" />
