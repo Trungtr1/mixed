@@ -43,7 +43,8 @@
 							<td>
 								{!! Form::open(array('route' => 'upload.to.file', 'method' => 'POST', 'class' => 'inline', 'id' => 'upload-question-form', 'files' => 'true' )) !!}
 								<input type="hidden" name="fileId" value="<?php echo $data['file'][0]['id'] ?>">
-								<button type="button" style="margin:20px 0px 10px 0px" class="btn btn-default relative"><span class="glyphicon glyphicon-cloud-upload"></span> <?=Form::file('docxFile', array('class' => 'upload-docx-file'));?>Upload</button>
+								<button type="button" name="btn_upload" id="btn_upload" style="margin:20px 0px 10px 0px" class="btn btn-default relative"><span class="glyphicon glyphicon-cloud-upload"></span>Upload</button>
+								<input type="file" name="docxFile" class="upload-docx-file" id="upload-docx" />
 								{!! Form::close() !!}	
 							</td>
 							<td>
@@ -178,6 +179,8 @@
 		}
 	});
 	
-	
+	$(document).on('click','#btn_upload',function(){
+		$('#upload-docx').click();
+	})
 </script>
 @endsection

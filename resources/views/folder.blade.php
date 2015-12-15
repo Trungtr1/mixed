@@ -232,7 +232,7 @@
 			  <h4 class="modal-title">Tạo thư mục</h4>
 			</div>
 			<div class="modal-body">
-				{!! Form::open(array('method' => 'POST','style'=>'margin-bottom:0px;','id'=>'frm_newfolder')) !!}
+				{!! Form::open(array('route'=>'add.folder','method' => 'POST','id'=>'frm_newfolder')) !!}
 					<div class="row">
 						<label>Folder name:</label>
 					</div>

@@ -44,7 +44,9 @@
 			<div class="alert alert-danger">{{ Session::get('responseData')['message'] }}</div>
 		@endif
 		@endif
-
+		@if (isset($data['message']))
+			<div class="alert alert-success">{{ $data['message'] }}</div>
+		@endif
 		@if (count($errors) > 0)
 			<div class="alert alert-danger">
 				<ul>
@@ -270,7 +272,7 @@
 			  <h4 class="modal-title">Tạo Nhóm Mới</h4>
 			</div>
 			<div class="modal-body">
-				{!! Form::open(array('method' => 'POST','style'=>'margin-bottom:0px;','id'=>'frm_addGroup')) !!}
+				{!! Form::open(array('route'=>'add.group','method' => 'POST','id'=>'frm_addGroup')) !!}
 					<div class="row">
 						<label>Tên Nhóm:</label>
 					</div>
