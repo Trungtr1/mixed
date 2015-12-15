@@ -57,39 +57,51 @@ use File;
 		
 		public function create_folder(Request $request){
 			
-			$user=Session::get('user');
+			$validator = Validator::make($request->all(), [
+				'name' 			=>	'required',
+			]);
+			
+			if ($validator->fails()) {
+			
+				return \Redirect::back()
+							->withErrors($validator)
+							->withInput();
+							
+			}else{
+				$user=Session::get('user');
 
-			$folder = DB::table('folders');
-			
-			$inputData = array(
-								'name' 		=> $request['name'],
-								'parent'	=> $request['id'],
-								'level'		=> $request['level']+1,
-								'date'		=> date('Y-m-d'),
-								'share'		=> 0
-							);
-			
-			if ($folder->insert($inputData)) {
-				
-				$folder_id = DB::getPdo()->lastInsertId();
+				$folder = DB::table('folders');
 				
 				$inputData = array(
-									'user_id' 	=> $user['id'],
-									'folder_id'	=> $folder_id,
-									'role'		=> 3
+									'name' 		=> $request['name'],
+									'parent'	=> $request['id'],
+									'level'		=> $request['level']+1,
+									'date'		=> date('Y-m-d'),
+									'share'		=> 0
 								);
-								
-				if(DB::table('groups')->insert($inputData))
-				{
-					return \Redirect::back()->with('responseData', array('statusCode' => 1, 'message' => 'Thêm mới thành công'));
-				}else{
-					return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Có lỗi xảy ra, vui lòng thử lại'));
-				}
 				
-			} else {
-			
-				return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Có lỗi xảy ra, vui lòng thử lại'));
-			
+				if ($folder->insert($inputData)) {
+					
+					$folder_id = DB::getPdo()->lastInsertId();
+					
+					$inputData = array(
+										'user_id' 	=> $user['id'],
+										'folder_id'	=> $folder_id,
+										'role'		=> 3
+									);
+									
+					if(DB::table('groups')->insert($inputData))
+					{
+						return \Redirect::back()->with('responseData', array('statusCode' => 1, 'message' => 'Thêm mới thành công'));
+					}else{
+						return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Có lỗi xảy ra, vui lòng thử lại'));
+					}
+					
+				} else {
+				
+					return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Có lỗi xảy ra, vui lòng thử lại'));
+				
+				}
 			}
 		}
 		

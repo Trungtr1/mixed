@@ -40,7 +40,7 @@ use File;
 										->join('folders','folders.id','=','groups.folder_id')
 										->where('groups.user_id',$user['id'])
 										->where('folders.level','1')
-										->where('categories','0')
+										->where('categories','2')
 										->where('folders.share','1')
 										->get();
 										
@@ -53,6 +53,17 @@ use File;
 										->where('categories','1')
 										->where('folders.share','0')
 										->get();
+			
+			$get_messages = DB::table('messages')->where('user_id',$user['id'])->where('status','0')->get();
+			
+			if($get_messages)
+			{
+				$viewData['statusCode'] = 1;
+			
+				$viewData['message'] = $get_messages[0]['content'];
+				
+				DB::table('messages')->where('id',$get_messages[0]['id'])->update(array('status'=>1));
+			}
 			
 			return view('user')->with('data',$viewData);
 		}
@@ -96,36 +107,7 @@ use File;
 				
 				}
 			}else{
-				$inputData = array(
-								'name' 		=> $request['group_name'],
-								'parent'	=> null,
-								'level'		=> 1,
-								'date'		=> date('Y-m-d'),
-								'share'		=> 1
-							);
-			
-				if ($folder->insert($inputData)) {
-					
-					$folder_id = DB::getPdo()->lastInsertId();
-					
-					$inputData = array(
-										'user_id' 	=> $user['id'],
-										'folder_id'	=> $folder_id,
-										'role'		=> 3
-									);
-									
-					if(DB::table('groups')->insert($inputData))
-					{
-						return \Redirect::back()->with('responseData', array('statusCode' => 1, 'message' => 'Tạo nhóm thành công'));
-					}else{
-						return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Có lỗi xảy ra, vui lòng thử lại'));
-					}
-					
-				} else {
 				
-					return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Có lỗi xảy ra, vui lòng thử lại'));
-				
-				}
 			}
 		}
 		

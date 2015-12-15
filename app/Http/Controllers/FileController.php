@@ -37,62 +37,54 @@ use File;
 			return view('file')->with('data',$viewData);
 		}
 		
-		/*public function create_file(Request $request)
-		{
-			$user=Session::get('user');
-			
-			$inputData = array(
-								'name' 		=> $request['file_name'],
-								'date'		=> date('Y-m-d'),
-								'folder_id' => $request['folder_id'],
-								'like'		=> 0,
-							);
-			
-			if (DB::table('files')->insert($inputData)) {
-				
-				return \Redirect::back()->with('responseData', array('statusCode' => 1, 'message' => 'Thêm mới thành công'));
-
-			} else {
-			
-				return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Có lỗi xảy ra, vui lòng thử lại'));
-			
-			}
-		}*/
-		
 		public function create_file(Request $request)
 		{
-			$user=Session::get('user');
+			$validator = Validator::make($request->all(), [
+				'file_name' 		=>	'required',
+			]);
 			
-			$inputData = array(
-								'name' 		=> $request['file_name'],
-								'parent'	=> $request['folder_id'],
-								'level'		=> $request['folder_level']+1,
-								'date'		=> date('Y-m-d'),
-								'categories'=> 1,
-								'share'		=> 0
-							);
+			if ($validator->fails()) {
 			
-			if (DB::table('folders')->insert($inputData)) {
+				return \Redirect::back()
+							->withErrors($validator)
+							->withInput();
+							
+			}else{
 				
-				$folder_id = DB::getPdo()->lastInsertId();
-				
+				$user=Session::get('user');
+			
 				$inputData = array(
-									'user_id' 	=> $user['id'],
-									'folder_id'	=> $folder_id,
-									'role'		=> 3
+									'name' 		=> $request['file_name'],
+									'parent'	=> $request['folder_id'],
+									'level'		=> $request['folder_level']+1,
+									'date'		=> date('Y-m-d'),
+									'categories'=> 1,
+									'share'		=> 0
 								);
-								
-				if(DB::table('groups')->insert($inputData))
-				{
-					return \Redirect::back()->with('responseData', array('statusCode' => 1, 'message' => 'Thêm mới thành công'));
-				}else{
-					return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Có lỗi xảy ra, vui lòng thử lại'));
-				}
+				
+				if (DB::table('folders')->insert($inputData)) {
+					
+					$folder_id = DB::getPdo()->lastInsertId();
+					
+					$inputData = array(
+										'user_id' 	=> $user['id'],
+										'folder_id'	=> $folder_id,
+										'role'		=> 3
+									);
+									
+					if(DB::table('groups')->insert($inputData))
+					{
+						return \Redirect::back()->with('responseData', array('statusCode' => 1, 'message' => 'Thêm mới thành công'));
+					}else{
+						return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Có lỗi xảy ra, vui lòng thử lại'));
+					}
 
-			} else {
-			
-				return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Có lỗi xảy ra, vui lòng thử lại'));
-			
+				} else {
+				
+					return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Có lỗi xảy ra, vui lòng thử lại'));
+				
+				}
+				
 			}
 		}
 		
