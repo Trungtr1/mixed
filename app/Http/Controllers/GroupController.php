@@ -140,7 +140,16 @@ use Mail;
 										);
 						if(DB::table('messages')->insert($inputData))
 						{				
-							return \Redirect::back()->with('responseData', array('statusCode' => 1, 'message' => 'Thêm thành công'));
+							$email = $request['email'];
+							if(Mail::send('mail2', array('group_name'=>$request['group_name']), function($message) use($email)
+								{
+									$message->to($email, null)->subject('Thư mời tham gia');
+								}))
+							{
+								return \Redirect::back()->with('responseData', array('statusCode' => 1, 'message' => 'Thư đã được gửi đến địa chỉ mail vừa nhập'));
+							}else{
+								return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Không gửi được mail'));
+							}
 						}else{
 							return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Gửi thông báo không thành công'));
 						}					
@@ -148,10 +157,11 @@ use Mail;
 						return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Có lỗi xảy ra, vui lòng thử lại'));
 					}				
 				}else{
-					//return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Không tìm thấy email trên hệ thống'));					
-					
-					if(Mail::send('mail', array('group_name'=>$request['group_name']), function($message) {
-						$message->to($request['email'], null)->subject('Thư mời tham gia');
+					//return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Không tìm thấy email trên hệ thống'));
+					$email = $request['email'];
+					if(Mail::send('mail', array('group_name'=>$request['group_name']), function($message) use($email)
+						{
+							$message->to($email, null)->subject('Thư mời tham gia');
 						}))
 					{
 						return \Redirect::back()->with('responseData', array('statusCode' => 1, 'message' => 'Thư đã được gửi đến địa chỉ mail vừa nhập, bạn hãy mời lại sau nhé.'));

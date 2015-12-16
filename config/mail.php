@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => array('address' => 'tuhaidenchin@gmail.com', 'name' => 'Hệ thống trộn đề'),
+    'from' => array('address' => 'tronde.vn@gmail.com', 'name' => 'Trộn Đề'),
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'username' => 'tuhaidenchin@gmail.com',
+    'username' => 'tronde.vn@gmail.com',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
     |
     */
 
-    'password' => '2u41197ru119',
+    'password' => 'trondesystem',
 
     /*
     |--------------------------------------------------------------------------
