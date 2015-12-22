@@ -81,3 +81,7 @@ Route::post('/cut',['as' => 'cut','uses' => 'SystemController@cut', 'middleware'
 Route::post('/paste',['as' => 'paste','uses' => 'SystemController@paste', 'middleware' => ['auth', 'role:1,3']]);
 
 Route::get('/admin', ['uses' => 'AdminController@index', 'middleware' => ['auth', 'role:3']]);
+
+Route::get('/account', ['uses' => 'UserController@account', 'middleware' => ['auth', 'role:1,3']]);
+
+Route::post('/account', ['as' => 'edit.account', 'uses' => 'UserController@editaccount', 'middleware' => ['auth', 'role:1,3']]);
