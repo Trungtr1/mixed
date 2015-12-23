@@ -83,6 +83,9 @@
 											<li><a href="/user">Trang cá nhân</a></li>
 										@endif
 										<li><a href="/manual">Hướng dẫn sử dụng</a></li>
+										@if (Auth::check())	
+											<li><a href="/account">Tài khoản</a></li>
+										@endif
 										@if (Auth::check() && Auth::user()->role==3)
 											<li><a href="/admin">&nbsp;Admin</a></li>
 										@endif	
