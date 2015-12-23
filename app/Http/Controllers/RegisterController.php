@@ -19,6 +19,7 @@ use Hash;
 		
 		public function creat_account(Request $request)
 		{
+
 			$validator = Validator::make($request->all(), [
 				'email' 		=>	'required|unique:users',
 				'fullname' 		=>	'required',
@@ -34,7 +35,7 @@ use Hash;
 							
 			} else {
 				
-				$inputData = $request->only('email','fullname','phone','address','avata');
+				$inputData = $request->only('email','fullname','phone','address');
 				
 				$inputData['password'] = Hash::make($request['password']);
 				
@@ -43,16 +44,24 @@ use Hash;
 				if (DB::table('users')->insert($inputData)) {
 					
 					$id	=	DB::getPdo()->lastInsertId();
-				
-					if(isset($request['avata'])){									
+
+					if(isset($request['avata'])){
 						
+						$mime=$request['avata']->getClientOriginalName();
+							
+						$ext = pathinfo($mime, PATHINFO_EXTENSION);
+						
+						echo $ext;
+
 						$move=$request['avata']->move(		
 								
-						base_path() . '/public/uploads/img/user_pictures/',$id.'.jpg'
+						base_path() . '/public/img/avata/',$id.'.'.$ext
 						
 						);
 						
 					}
+					
+					DB::table('users')->where('id',$id)->update(array('avata'=>$id.'.'.$ext));
 		
 				return \Redirect('/login')->with('responseData', array('statusCode' => 1, 'message' => 'Thêm mới thành công'));
 			
