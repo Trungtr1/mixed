@@ -50,8 +50,6 @@ use Hash;
 						$mime=$request['avata']->getClientOriginalName();
 							
 						$ext = pathinfo($mime, PATHINFO_EXTENSION);
-						
-						echo $ext;
 
 						$move=$request['avata']->move(		
 								
