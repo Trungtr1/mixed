@@ -110,7 +110,7 @@
 								<?php } ?>
 							</div>
 							<div class="col-lg-5 col-md-5" style="padding:0px">
-								<button type="button" class="btn btn-danger" style="float:right;" data-toggle="modal" data-target="#modal_mixed"><span class="glyphicon glyphicon-refresh"></span> &nbsp;Trộn đề</button>
+								<button type="button" class="btn btn-danger" id="btn-mix" style="float:right;" data-toggle="modal" data-target="#modal_mixed"><span class="glyphicon glyphicon-refresh"></span> &nbsp;Trộn đề</button>
 							</div>
 						</div>
 						<br/>
