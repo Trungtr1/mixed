@@ -76,8 +76,10 @@
 										<li>Trộn đề trên nhiều file các bạn thực hiện như sau:</li>
 										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/mix.png')}}" alt="..."></li>
 										<li>Điền đầy đủ thông tin giống trộn đề trong 1 file</li>
-										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/mix2.png')}}" alt="..."></li>
-										<li>Sau khi điền đầy đủ thông tin và ấn “Đã xong” hệ thống sẽ trộn đề trong file các bạn đã chọn và tạo ra đề theo thông tin các bạn đã bổ sung và trả về kết quả như hình bên dưới</li>										
+										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/1.png')}}" alt="..."></li>
+										<li>Sau khi điền đầy đủ thông tin ấn vào mũi tên để chuyển sang mục tiếp theo</li>
+										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/2.png')}}" alt="..."></li>
+										<li>Ở đây bạn sẽ phải điền số câu hỏi bạn muốn lấy từ mỗi file sau đó ấn "Tạo đề"  hệ thống sẽ trộn đề trong file các bạn đã chọn và tạo ra đề theo thông tin các bạn đã bổ sung và trả về kết quả như hình bên dưới</li>									
 										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/test1.png')}}" alt="..."></li>										
 										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/test2.png')}}" alt="..."></li>
 										<li>Nếu bạn muốn download các bạn ấn vào nút “DOWNLOAD” để lưu lại file word.</li>
