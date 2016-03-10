@@ -125,7 +125,7 @@
 					</div>
 					<div class="row">
 						<input type="hidden" name="choosetest[]" value="<?php echo $data['file'][0]['id'] ?>" /> 
-						<input type="text" name="number_questions" class="form-control" value="" />
+						<input type="text" name="number_questions[]" id="number_questions" class="form-control" value="" />
 					</div>
 					<br/>
 					<div class="row">

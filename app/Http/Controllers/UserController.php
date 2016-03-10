@@ -48,11 +48,14 @@ use Hash;
 			$viewData['tests'] = DB::table('tests')->where('status',1)->where('user_id',$user['id'])->get();
 			
 			$viewData['files'] = DB::table('groups')
+										->select(DB::raw('count(questions.id) as count, folders.id, folders.name, folders.date'))
 										->join('folders','folders.id','=','groups.folder_id')
+										->join('questions','folders.id','=','questions.folder_id','LEFT')
 										->where('groups.user_id',$user['id'])
 										->where('folders.level','1')
 										->where('categories','1')
 										->where('folders.share','0')
+										->groupBy('folders.id','folders.name','folders.date')
 										->get();
 			
 			$get_messages = DB::table('messages')->where('user_id',$user['id'])->where('status','0')->get();

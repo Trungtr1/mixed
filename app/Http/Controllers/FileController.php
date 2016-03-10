@@ -91,7 +91,6 @@ use File;
 		public function mixQuestion(Request $request)
 		{
 			$validator = Validator::make($request->all(), [
-				'number_questions' 	=>	'required',
 				'number_tests' 		=>	'required',
 				'school'			=>  'required',
 				'title'				=>  'required',
@@ -106,33 +105,49 @@ use File;
 							->withInput();
 							
 			}else{
-				if($request['choosetest']){
+				if($request['file']){
 					$questions = array();
+					
+					$data_questions = array();
 
-					foreach($request['choosetest'] as $cht)
+					foreach($request['file'] as $key=>$cht)
 					{
 						$get_questions = DB::table('questions')->where('folder_id',$cht)->get();
 						
 						foreach($get_questions as $ge)
 						{
-							$questions[] = $ge['id'];
+							$questions[] = $ge['id'];							
+						}
+						
+						$random_questions = array_rand($questions,$request['number_questions'][$key]);
+						
+						foreach($random_questions as $value)
+						{
+							$data_questions[] = $questions[$value];
 						}
 					}
 					
-					if(count($questions)>=$request['number_questions'])
+					$total_questions=0;
+					
+					foreach($request['number_questions'] as $value)
+					{
+						$total_questions=$total_questions+$value;
+					}
+					
+					if(count($data_questions)>=$total_questions)
 					{
 						$user = Session::get('user');
 						
 						$tests = array();
 						
-						$random_questions = array_rand($questions,$request['number_questions']);
+						/*$random_questions = array_rand($questions,$request['number_questions']);
 						
 						$data_questions = array();										
 						
 						foreach($random_questions as $value)
 						{
 							$data_questions[] = $questions[$value];
-						}										
+						}*/									
 						
 						for($i=0;$i<$request['number_tests'];$i++)
 						{

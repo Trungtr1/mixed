@@ -25,6 +25,9 @@
 		padding-top: 2px;
 		padding-bottom: 2px;
 	}
+	.nav-pills .active{
+		display:none;
+	}
 </style>
 <div class="box">
 	<!--<div style="height:150px; background-color:#e6f1f6">
@@ -115,111 +118,129 @@
 							<div class="panel panel-default">
 								<div class="panel-heading" style="background-color:#e6f1f6;border:1px solid #c1dce9">
 								</div>
-								<div class="panel-body" style="padding:0px">
+								<div class="panel-body" style="padding:0px">									
+									<table style="width:100%;padding:0px">
+										<?php foreach($data['folders'] as $fd){ ?>
+											<tr class="groups">
+												<td style="border-bottom:1px solid #ccc">
+													<input type="checkbox"  name="choosetest[]" value="<?php echo $fd['id'] ?>" class="cht"/>&nbsp;&nbsp;
+													<a href="/folder?id=<?php echo $fd['id'] ?>" style="font-size:11pt"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<?php echo $fd['name'] ?></a>
+												</td>
+												<td style="border-bottom:1px solid #ccc;text-align:center;width:150px;">
+													<span style="color:#A9A9A9"><?php echo $fd['date'] ?><span>
+												</td>
+												<td style="border-bottom:1px solid #ccc;text-align:center;width:120px">
+													<a href="/user?action=like&id=<?php echo $fd['id'] ?>">
+														<button type="button" title="like" name="like" style="border:0px;background:none;"><span style="color:#159014" class='glyphicon glyphicon-star'></span></button>
+													</a>
+													<button type="button" title="sửa" name="sua" style="border:0px;background:none;">
+														<span style="color:#428bca" class='glyphicon glyphicon-pencil'></span>
+													</button>
+													<a href="/user?action=delete&id=<?php echo $fd['id'] ?>" onclick="return confirm('Are you sure you want to delete this item?');">
+														<button type="button" title="xóa" name="xoa" style="border:0px;background:none;"><span style="color:#e44b23" class='glyphicon glyphicon-trash'></span></button>
+													</a>
+												</td>
+											</tr>
+										<?php } ?>
+										<?php foreach($data['files'] as $fi){ ?>
+											<tr class="groups">
+												<td style="border-bottom:1px solid #ccc">
+													<input type="checkbox"  name="choosetest[]" value="<?php echo $fi['id'] ?>" class="cht"/>&nbsp;&nbsp;
+													<a href="/file?id=<?php echo $fi['id'] ?>" style="font-size:11pt;"><span class="glyphicon glyphicon-list-alt" style="color:#000"></span>&nbsp;&nbsp;<?php echo $fi['name'] ?></a>
+												</td>
+												<td style="border-bottom:1px solid #ccc;text-align:center;width:150px;">
+													<span style="color:#A9A9A9"><?php echo $fi['date'] ?><span>
+												</td>
+												<td style="border-bottom:1px solid #ccc;text-align:center;width:120px">
+													<a href="/file?action=like&id=<?php echo $fi['id'] ?>">
+														<button type="button" title="like" name="like" style="border:0px;background:none;"><span style="color:#159014" class='glyphicon glyphicon-star'></span></button>
+													</a>
+													<button type="button" title="sửa" name="sua" style="border:0px;background:none;">
+														<span style="color:#428bca" class='glyphicon glyphicon-pencil'></span>
+													</button>
+													<a href="/user?action=delete&id=<?php echo $fi['id'] ?>" onclick="return confirm('Are you sure you want to delete this item?');">
+														<button type="button" title="xóa" name="xoa" style="border:0px;background:none;"><span style="color:#e44b23" class='glyphicon glyphicon-trash'></span></button>
+													</a>
+												</td>
+											</tr>
+										<?php } ?>
+									</table>
 									{!! Form::open(array('route' => 'mix.to.folder', 'method' => 'POST', 'class' => 'inline', 'id' => 'mix-question-form', 'files' => 'true' )) !!}
-										<table style="width:100%;padding:0px">
-											<?php foreach($data['folders'] as $fd){ ?>
-												<tr class="groups">
-													<td style="border-bottom:1px solid #ccc">
-														<input type="checkbox"  name="choosetest[]" value="<?php echo $fd['id'] ?>" class="cht"/>&nbsp;&nbsp;
-														<a href="/folder?id=<?php echo $fd['id'] ?>" style="font-size:11pt"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<?php echo $fd['name'] ?></a>
-													</td>
-													<td style="border-bottom:1px solid #ccc;text-align:center;width:150px;">
-														<span style="color:#A9A9A9"><?php echo $fd['date'] ?><span>
-													</td>
-													<td style="border-bottom:1px solid #ccc;text-align:center;width:120px">
-														<a href="/user?action=like&id=<?php echo $fd['id'] ?>">
-															<button type="button" title="like" name="like" style="border:0px;background:none;"><span style="color:#159014" class='glyphicon glyphicon-star'></span></button>
-														</a>
-														<button type="button" title="sửa" name="sua" style="border:0px;background:none;">
-															<span style="color:#428bca" class='glyphicon glyphicon-pencil'></span>
-														</button>
-														<a href="/user?action=delete&id=<?php echo $fd['id'] ?>" onclick="return confirm('Are you sure you want to delete this item?');">
-															<button type="button" title="xóa" name="xoa" style="border:0px;background:none;"><span style="color:#e44b23" class='glyphicon glyphicon-trash'></span></button>
-														</a>
-													</td>
-												</tr>
-											<?php } ?>
-											<?php foreach($data['files'] as $fi){ ?>
-												<tr class="groups">
-													<td style="border-bottom:1px solid #ccc">
-														<input type="checkbox"  name="choosetest[]" value="<?php echo $fi['id'] ?>" class="cht"/>&nbsp;&nbsp;
-														<a href="/file?id=<?php echo $fi['id'] ?>" style="font-size:11pt;"><span class="glyphicon glyphicon-list-alt" style="color:#000"></span>&nbsp;&nbsp;<?php echo $fi['name'] ?></a>
-													</td>
-													<td style="border-bottom:1px solid #ccc;text-align:center;width:150px;">
-														<span style="color:#A9A9A9"><?php echo $fi['date'] ?><span>
-													</td>
-													<td style="border-bottom:1px solid #ccc;text-align:center;width:120px">
-														<a href="/file?action=like&id=<?php echo $fi['id'] ?>">
-															<button type="button" title="like" name="like" style="border:0px;background:none;"><span style="color:#159014" class='glyphicon glyphicon-star'></span></button>
-														</a>
-														<button type="button" title="sửa" name="sua" style="border:0px;background:none;">
-															<span style="color:#428bca" class='glyphicon glyphicon-pencil'></span>
-														</button>
-														<a href="/user?action=delete&id=<?php echo $fi['id'] ?>" onclick="return confirm('Are you sure you want to delete this item?');">
-															<button type="button" title="xóa" name="xoa" style="border:0px;background:none;"><span style="color:#e44b23" class='glyphicon glyphicon-trash'></span></button>
-														</a>
-													</td>
-												</tr>
-											<?php } ?>
-										</table>
-										<div class="modal fade" id="modal_mixed" role="dialog">
+										<div class="modal fade" id="modal_mixed" role="dialog">											
 											<div class="modal-dialog">
 												<div class="modal-content">
 													<div class="modal-header">
 													  <button type="button" class="close" data-dismiss="modal">&times;</button>
 													  <h4 class="modal-title">Thông tin bổ sung</h4>
 													</div>
-													<div class="modal-body">											
+													<div class="modal-body">
+																	
 															<div class="row">
-																<label>Số lượng đề cần tạo:</label>
+																<div class="tab-content col-sm-12">
+																	<div class="tab-pane active" id="tab1">
+																		<div class="row">
+																			<label>Số lượng đề cần tạo:</label>
+																		</div>
+																		<div class="row">
+																			<input type="text" name="number_tests" class="form-control" value="" />
+																		</div>																	
+																		<br/>
+																		<div class="row">
+																			<label>Tên đơn vị:</label>
+																		</div>
+																		<div class="row">
+																			<input type="text" name="school" class="form-control" value="" />
+																		</div>
+																		<br/>
+																		<div class="row">
+																			<label>Tiêu đề:</label>
+																		</div>
+																		<div class="row">
+																			<input type="text" name="title" class="form-control" value="" />
+																		</div>
+																		<br/>
+																		<div class="row">
+																			<label>Tên môn:</label>
+																		</div>
+																		<div class="row">
+																			<input type="text" name="subject" class="form-control" value="" />
+																		</div>
+																		<br/>
+																		<div class="row">
+																			<label>Thời gian:</label>
+																		</div>
+																		<div class="row">
+																			<input type="text" name="time" class="form-control" value="" />
+																		</div>																		
+																	</div>
+																	<div class="tab-pane" id="tab2">	
+																		<div id="list_file">
+																			
+																		</div>
+																		<br/>
+																		<div class="row">
+																			<label>Số lượng câu hỏi mỗi đề:&nbsp;<span id="total_question" style="color:red"></span></label>
+																			<input type="hidden" name="ipt_total_question" id="ipt_total_question" value='' />
+																		</div>																	
+																		<br/>
+																		<div class="row">
+																			<button type="submit" class="btn btn-primary" id="mixed" data-dismiss="modal">Tạo Đề</button>
+																		</div>																	
+																	</div>
+																</div>
 															</div>
-															<div class="row">
-																<input type="text" name="number_tests" class="form-control" value="" />
-															</div>
-															<br/>
-															<div class="row">
-																<label>Số lượng câu hỏi mỗi đề:</label>
-															</div>
-															<div class="row">
-																<input type="text" name="number_questions" class="form-control" value="" />
-															</div>
-															<br/>
-															<div class="row">
-																<label>Tên đơn vị:</label>
-															</div>
-															<div class="row">
-																<input type="text" name="school" class="form-control" value="" />
-															</div>
-															<br/>
-															<div class="row">
-																<label>Tiêu đề:</label>
-															</div>
-															<div class="row">
-																<input type="text" name="title" class="form-control" value="" />
-															</div>
-															<br/>
-															<div class="row">
-																<label>Tên môn:</label>
-															</div>
-															<div class="row">
-																<input type="text" name="subject" class="form-control" value="" />
-															</div>
-															<br/>
-															<div class="row">
-																<label>Thời gian:</label>
-															</div>
-															<div class="row">
-																<input type="text" name="time" class="form-control" value="" />
-															</div>
+														
 													</div>
-													<div class="modal-footer">
-													  <button type="submit" class="btn btn-primary" id="mixed" data-dismiss="modal">Đã Xong</button>
+													<div class="modal-footer">													 
+														<ul class="nav nav-pills" style="float:right">
+															<li class="active"><button href="#tab1" class="btn btn-primary" data-toggle='tab'><span class="glyphicon glyphicon-arrow-left"></span></a></li>
+															<li><button href="#tab2" class="btn btn-primary" data-toggle='tab'><span class="glyphicon glyphicon-arrow-right"></span></a></li>
+														</ul>
 													</div>
 												</div>	  
 											</div>
 										</div>
-									{!! Form::close() !!}
+									{!! Form::close() !!}									
 								</div>						
 							</div>
 						</div>
@@ -357,5 +378,42 @@
 		})
 		$('#objects').val($objects);
 	})
+	$(document).on('click','#btn-mix',function(){
+		var $total_questions=0;
+		$('.file').each(function(){
+			if(this.checked==true){
+				var $file_id = $(this).val();
+				var $file_name=$(this).attr('data-name');
+				var $file_cques=parseInt($(this).attr('data-cques'));
+				$total_questions=$total_questions+$file_cques;
+				if($file_cques>0)
+				{
+					$file ="";
+					$file+= "<div class='row'>";
+					$file+= 	"<label>Số câu hỏi từ file "+$file_name+" :</label>";
+					$file+=		"<input type='checkbox' name='file[]' value='"+$file_id+"' checked='true' hidden/>";
+					$file+= "</div>";
+					$file+= "<div class='row'>";
+					$file+= 	"<input type='text' class='form-control nbq' name='number_questions[]' value='"+$file_cques+"' placeholder='Tối đa "+$file_cques+"' onblur='change_number()'/>";
+					$file+= "</div>";
+					$file+= "<br/>";
+					$('#list_file').append($file);
+				}					
+			}
+		})
+		$('#total_question').text($total_questions);
+		$('#ipt_total_question').val($total_questions);	
+	})
+	
+	function change_number()
+	{
+		var $total_questions=0;
+		$('.nbq').each(function(){
+			var $number_questions=parseInt($(this).val());
+			$total_questions=$total_questions+$number_questions;
+		})
+		$('#total_question').text($total_questions);
+		$('#ipt_total_question').val($total_questions);
+	}
 </script>
 @endsection
