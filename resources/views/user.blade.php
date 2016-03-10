@@ -123,7 +123,7 @@
 										<?php foreach($data['folders'] as $fd){ ?>
 											<tr class="groups">
 												<td style="border-bottom:1px solid #ccc">
-													<input type="checkbox"  name="choosetest[]" value="<?php echo $fd['id'] ?>" class="cht"/>&nbsp;&nbsp;
+													<input type="checkbox"  name="choosetest[]" value="<?php echo $fd['id'] ?>" class="cht folder" data-name="<?php echo $fd['name'] ?>"/>&nbsp;&nbsp;
 													<a href="/folder?id=<?php echo $fd['id'] ?>" style="font-size:11pt"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<?php echo $fd['name'] ?></a>
 												</td>
 												<td style="border-bottom:1px solid #ccc;text-align:center;width:150px;">
@@ -145,7 +145,7 @@
 										<?php foreach($data['files'] as $fi){ ?>
 											<tr class="groups">
 												<td style="border-bottom:1px solid #ccc">
-													<input type="checkbox"  name="choosetest[]" value="<?php echo $fi['id'] ?>" class="cht"/>&nbsp;&nbsp;
+													<input type="checkbox"  name="choosetest[]" value="<?php echo $fi['id'] ?>" class="cht file" data-name="<?php echo $fi['name'] ?>" data-cques="<?php echo $fi['count'] ?>"/>&nbsp;&nbsp;
 													<a href="/file?id=<?php echo $fi['id'] ?>" style="font-size:11pt;"><span class="glyphicon glyphicon-list-alt" style="color:#000"></span>&nbsp;&nbsp;<?php echo $fi['name'] ?></a>
 												</td>
 												<td style="border-bottom:1px solid #ccc;text-align:center;width:150px;">
