@@ -55,7 +55,7 @@ class AuthController extends Controller
 			
 			Session::put('user', $user);
 
-			return redirect()->intended('user');
+			return redirect()->intended('folder');
 			
         } else {
 			return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Thông tin đăng nhập không chính xác'));

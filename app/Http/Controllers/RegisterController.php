@@ -19,7 +19,7 @@ use Hash;
 		
 		public function creat_account(Request $request)
 		{
-
+			
 			$validator = Validator::make($request->all(), [
 				'email' 		=>	'required|unique:users',
 				'fullname' 		=>	'required',
@@ -56,10 +56,8 @@ use Hash;
 						base_path() . '/public/img/avata/',$id.'.'.$ext
 						
 						);
-						
+						DB::table('users')->where('id',$id)->update(array('avata'=>$id.'.'.$ext));
 					}
-					
-					DB::table('users')->where('id',$id)->update(array('avata'=>$id.'.'.$ext));
 		
 				return \Redirect('/login')->with('responseData', array('statusCode' => 1, 'message' => 'Thêm mới thành công'));
 			

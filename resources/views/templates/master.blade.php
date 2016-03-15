@@ -9,7 +9,7 @@
 		<script src="{{ asset('public/js/bootstrap.min.js') }}"></script>
 		<script src="{{ asset('public/js/jquery.dataTables.min.js') }}"></script>
 		<script src="{{ asset('public/js/dataTables.bootstrap.min.js') }}"></script>
-		<script src="{{ asset('public/js/app.js?v=1.1') }}"></script>
+		<script src="{{ asset('public/js/app.js?') }}"></script>
     </head>
     <!--<body style="background-color:#F5F5F5;">-->
 	<body>
@@ -80,7 +80,7 @@
 										<!--<li class="active"><a href="/home">Trang chủ <span class="sr-only">(current)</span></a></li>-->
 										<li><a href="/home">Trang chủ</a></li>
 										@if (Auth::check())	
-											<li><a href="/user">Trang cá nhân</a></li>
+											<li><a href="/folder">Thư mục</a></li>
 										@endif
 										<li><a href="/manual">Hướng dẫn sử dụng</a></li>
 										@if (Auth::check())	

@@ -25,58 +25,50 @@
 </style>
 <body>
 	<div align="center">
+		{!! Form::open(array('method' => 'POST','id' => 'frm-test', 'files' => 'true' )) !!}
 		<div class="section1">
 			<div style="text-align:left">
 				<?php foreach($data['tests'] as $ts){ ?>
 				<table class="table" style="width:100%">					
 					<tr>
-						<td style="text-align:center;">
-							<h3 >Kết quả bài kiểm tra</h3>
-							số câu đúng <?php echo $data['correct']; ?> / <?php echo $data['tests'][0]['number_questions'] ?>
+						<td>
+							<h3 align="center">KIỂM TRA</h3>
 						</td>
 					</tr>					
 					<tr>
 						<td>
-							<table style="margin-top:10px;width:100%">
+							<div style="margin-top:10px;">
 								<?php foreach($data['questions'][$ts['id']] as $key=>$qs){ ?>
-									<tr class="row" style="margin-top:5px;">
-										<td></td>
-										<td><b>Câu <?php echo $key+1 ?>:</b> <?php echo $qs['content'] ?></td>
-									</tr>
-									<?php foreach($data['answers'][$ts['id']][$qs['id']] as $key2=>$ans){ ?>									
-									<tr>
-										<td>
-											<?php if($key2==$data['answers_correct'][$key]){?>
-												&#9745;
-											<?php }else{ ?>
-												&#9744;
-											<?php } ?>
-										</td>
-										<td>
-											<input type="radio" name="question_<?php echo $key ?>" value='<?php echo $key2 ?>' <?php if($key2==$data['choose'][$key]){ echo "checked='true'"; } ?>/>
+									<div class="row" style="margin-top:5px;">
+										<b>Câu <?php echo $key+1 ?>:</b> <?php echo $qs['content'] ?>
+									</div>
+									<?php foreach($data['answers'][$ts['id']][$qs['id']] as $key2=>$ans){ ?>
+										<div class="row">
+											<input type="radio" name="question_<?php echo $key ?>" value='<?php echo $key2 ?>' />
 											<?php if($ans['order']==0){ echo "A.";} ?>
 											<?php if($ans['order']==1){ echo "B.";} ?>
 											<?php if($ans['order']==2){ echo "C.";} ?>
 											<?php if($ans['order']==3){ echo "D.";} ?>
 											<?php if($ans['order']==4){ echo "E.";} ?>
 											<?php echo $ans['content'] ?>
-										</td>
-									</tr>
+										</div>
 									<?php } ?>		
 								<?php } ?>
-							</table>
+							</div>
 						</td>
 					</tr>									
 				</table>				
 				<?php } ?>
 			</div>	
 		</div>
-		<br/>
 		<div>
 			<div style="margin-top:10px;">
-				<a href="/folder" style="padding:10px 20px 10px 20px;border:1px solid #ccc;text-decoration:none;">Trở về</a>
+					<input type="hidden" name="number_questions" value="<?php echo $data['tests'][0]['number_questions'] ?>" />
+					<input type="hidden" name="test_id" value="<?php echo $data['tests'][0]['id'] ?>" />
+					<input type="submit" name="submit" style="height:40px;width:200px;" value="Nộp bài" />
 			</div>
 		</div>
+		{!! Form::close() !!}
 		<br>
 		<br>
 	</div>

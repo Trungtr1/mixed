@@ -14,106 +14,170 @@ use File;
 		
 		public function index(Request $request)				
 		{
+
 			$id = $request->get('id');
-			
-			$action = $request->get('action');						
-			
+
 			$user = Session::get('user');
 			
+			$viewData['user'] = DB::table('groups')
+											->select('users.id','users.fullname','users.avata','groups.folder_id','groups.role as role_group')
+											->join('users','users.id','=','groups.user_id')
+											->where('groups.folder_id',$id)
+											->where('groups.user_id',$user['id'])
+											->get();
+
 			if(Session::has('objects_cut')){
 				$objects_cut = Session::get('objects_cut');
 				$viewData['objects_cut'] = $objects_cut;
 			}
-			
+
+			$action = $request->get('action');												
+
 			if($action=='delete')
 			{
 				$this->delete_folder($request->get('folder_id'));
 			}
 			
-			$viewData['user']=$user;
-			
-			$viewData['folder'] = DB::table('folders')->where('id',$id)->get();						
-			
-			$viewData['children'] = DB::table('folders')->where('parent',$id)->where('categories',0)->get();
-			
-			$n = $viewData['folder'][0]['level'];
-			
-			$parent = $viewData['folder'][0]['parent'];
-			
-			if($n>1)
-			{
-				for($i=1;$i<$n;$i++)
-				{
-					$data_parent = DB::table('folders')->where('id',$parent)->get();
-					$viewData['parent'][$n-$i] = $data_parent[0];
-					$parent = $data_parent[0]['parent'];
-				}
-			}
-			
-			$viewData['files'] = DB::table('folders')->where('parent',$id)->where('categories',1)->get();
+			if(isset($id)){
 
-			return view('folder')->with('data',$viewData);
-		}
-		
-		public function create_folder(Request $request){
-			
-			$validator = Validator::make($request->all(), [
-				'name' 			=>	'required',
-			]);
-			
-			if ($validator->fails()) {
-			
-				return \Redirect::back()
-							->withErrors($validator)
-							->withInput();
-							
-			}else{
-				$user=Session::get('user');
-
-				$folder = DB::table('folders');
+				$viewData['folder'] = DB::table('folders')
+													->select('folders.id','folders.name','folders.parent','folders.level','folders.categories','folders.date','folders.share','groups.user_id','groups.folder_id')
+													->join('groups','folders.id','=','groups.folder_id')
+													->where('folders.id',$id)
+													->get();
 				
-				$inputData = array(
-									'name' 		=> $request['name'],
-									'parent'	=> $request['id'],
-									'level'		=> $request['level']+1,
-									'date'		=> date('Y-m-d'),
-									'share'		=> 0
-								);
+				$auth = array(							
+							'share'	=>	$viewData['folder'][0]['share']
+				);
 				
-				if ($folder->insert($inputData)) {
+				foreach($viewData['folder'] as $value){
+					$auth['user'][]=$value['user_id'];
+				}				
+				
+				if($auth['share']==0){	
 					
-					$folder_id = DB::getPdo()->lastInsertId();
+					if(in_array($user['id'],$auth['user'])){
 					
-					$inputData = array(
-										'user_id' 	=> $user['id'],
-										'folder_id'	=> $folder_id,
-										'role'		=> 3
-									);
-									
-					if(DB::table('groups')->insert($inputData))
-					{
-						return \Redirect::back()->with('responseData', array('statusCode' => 1, 'message' => 'Thêm mới thành công'));
+						$viewData['subfolder'] = DB::table('folders')->where('parent',$id)->where('categories',0)->get();
+				
+						$viewData['subfile'] = DB::table('folders')
+														->select(DB::raw('count(questions.id) as count, folders.id, folders.name, folders.date, folders.share'))
+														->join('questions','folders.id','=','questions.folder_id','LEFT')
+														->where('parent',$id)
+														->where('categories',1)
+														->groupBy('folders.id','folders.name','folders.date','folders.share')
+														->get();
+														
+						return view('folder')->with('data',$viewData);
+					
 					}else{
-						return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Có lỗi xảy ra, vui lòng thử lại'));
+						
+						echo "Đây là thư mục cá nhân không chia sẻ, bạn không có quyền truy cập thư mục này.";
+					
+					}
+
+				}else{
+					
+					if(in_array($user['id'],$auth['user'])){
+						
+						$viewData['subfolder'] = DB::table('folders')->where('parent',$id)->where('categories',0)->get();
+				
+						$viewData['subfile'] = DB::table('folders')
+														->select(DB::raw('count(questions.id) as count, folders.id, folders.name, folders.date, folders.share'))
+														->join('questions','folders.id','=','questions.folder_id','LEFT')
+														->where('parent',$id)
+														->where('categories',1)
+														->groupBy('folders.id','folders.name','folders.date','folders.share')
+														->get();
+						
+						$viewData['user_group'] = DB::table('groups')
+														->select('users.id','users.fullname','users.avata','groups.folder_id','groups.role as role_group')
+														->join('users','users.id','=','groups.user_id')
+														->where('groups.folder_id',$id)
+														->get();
+						
+						return view('group')->with('data',$viewData);												
+						
+					}else{
+
+						$viewData['subfolder'] = DB::table('folders')->where('parent',$id)->where('categories',0)->get();
+			
+						$viewData['subfile'] = DB::table('folders')
+														->select(DB::raw('count(questions.id) as count, folders.id, folders.name, folders.date, folders.share'))
+														->join('questions','folders.id','=','questions.folder_id','LEFT')
+														->where('parent',$id)
+														->where('categories',1)
+														->groupBy('folders.id','folders.name','folders.date','folders.share')
+														->get();
+
+						$viewData['user_group'] = DB::table('groups')
+														->select('users.id','users.fullname','users.avata','groups.folder_id','groups.role as role_group')
+														->join('users','users.id','=','groups.user_id')
+														->where('groups.folder_id',$id)
+														->get();										
+														
+						return view('group_guest')->with('data',$viewData);
+						
+						
 					}
 					
-				} else {
-				
-					return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Có lỗi xảy ra, vui lòng thử lại'));
-				
 				}
+
+			}else{
+
+				$viewData['folders'] = DB::table('groups')
+										->join('folders','folders.id','=','groups.folder_id')
+										->where('groups.user_id',$user['id'])
+										->where('folders.level','1')
+										->where('categories','0')
+										->get();
+
+				$viewData['files'] = DB::table('groups')
+											->select(DB::raw('count(questions.id) as count, folders.id, folders.name, folders.date, folders.share'))
+											->join('folders','folders.id','=','groups.folder_id')
+											->join('questions','folders.id','=','questions.folder_id','LEFT')
+											->where('groups.user_id',$user['id'])
+											->where('folders.level','1')
+											->where('categories','1')
+											->groupBy('folders.id','folders.name','folders.date','folders.share')
+											->get();
+				
+				$get_messages = DB::table('messages')->where('user_id',$user['id'])->where('status','0')->get();
+				
+				if($get_messages)
+				{
+					$viewData['statusCode'] = 1;
+				
+					$viewData['message'] = $get_messages[0]['content'];
+					
+					DB::table('messages')->where('id',$get_messages[0]['id'])->update(array('status'=>1));
+				}
+				
+				return view('user')->with('data',$viewData);
+				
 			}
 		}
 		
 		public function delete_folder($id)
 		{
-			if (DB::table('folders')->where('id', $id)->delete()) {
 			
-			return \Redirect::back()->with('responseData', array('statusCode' => 1, 'message' => 'Đã xóa thành công'));
+			$user = Session::get('user');
 			
+			if (DB::table('groups')->where('folder_id', $id)->where('user_id',$user['id'])->where('role',3)->delete()) {
+				
+				if (DB::table('folders')->where('id', $id)->delete()){
+					
+					return \Redirect::back()->with('responseData', array('statusCode' => 1, 'message' => 'Đã xóa thành công'));
+					
+				}else{
+					
+					return \Redirect::back()->with('responseData', array('statusCode' => 2, 'message' => 'Chưa xóa hết dữ liệu trong hệ thống'));
+					
+				}
+				
 			} else {
 			
-				return \Redirect::back()->with('responseData', array('statusCode' => 2, 'message' => 'Chưa xóa được, vui lòng thử lại'));
+				return \Redirect::back()->with('responseData', array('statusCode' => 2, 'message' => 'Bạn không có đủ quyền để thực hiện xóa'));
 			
 			}
 		}

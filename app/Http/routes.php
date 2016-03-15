@@ -36,23 +36,19 @@ Route::post('/login', ['uses' => 'Auth\AuthController@authenticate', 'middleware
 
 Route::get('/logout', ['uses' => 'Auth\AuthController@logout', 'middleware' => ['auth', 'role:1,3']]);
 
-Route::get('/user', ['uses' => 'UserController@index', 'middleware' => ['auth', 'role:1,3']]);
-
 Route::get('/folder',['uses' => 'FolderController@index', 'middleware' => ['auth', 'role:1,3']]);
 
-Route::post('/folder',['as' => 'add.folder','uses' => 'FolderController@create_folder', 'middleware' => ['auth', 'role:1,3']]);
+Route::post('/folder',['as' => 'add.folder','uses' => 'SystemController@create_folder', 'middleware' => ['auth', 'role:1,3']]);
+
+Route::post('/group',['as' => 'add.folder.group','uses' => 'SystemController@create_folder_group', 'middleware' => ['auth', 'role:1,3']]);
 
 Route::post('/file/upload',['as' => 'upload.to.file', 'uses' => 'FileController@uploadQuestion', 'middleware' => ['auth', 'role:1,3']]);
 
-Route::post('/folder/mix',['as' => 'mix.to.folder', 'uses' => 'FileController@mixQuestion', 'middleware' => ['auth', 'role:1,3']]);
+Route::post('/folder/mix',['as' => 'mix.to.folder', 'uses' => 'SystemController@mixQuestion', 'middleware' => ['auth', 'role:1,3']]);
+
+Route::post('/folder/test',['as' => 'test.to.folder', 'uses' => 'SystemController@testQuestion', 'middleware' => ['auth', 'role:1,3']]);
 
 Route::get('/file',['uses' => 'FileController@index', 'middleware' => ['auth', 'role:1,3']]);
-
-Route::post('/file',['as' => 'add.file','uses' => 'FileController@create_file', 'middleware' => ['auth', 'role:1,3']]);
-
-Route::get('/group',['uses' => 'GroupController@index', 'middleware' => ['auth', 'role:1,3']]);
-
-Route::post('/group',['as' => 'add.group','uses' => 'GroupController@create_group', 'middleware' => ['auth', 'role:1,3']]);
 
 Route::post('/group/invite',['as' => 'invite','uses' => 'GroupController@invite', 'middleware' => ['auth', 'role:1,3']]);
 
@@ -70,7 +66,9 @@ Route::get('/test', ['uses' => 'TestController@index', 'middleware' => ['auth', 
 
 Route::post('/test', ['uses' => 'TestController@download_test', 'middleware' => ['auth', 'role:1,3']]);
 
-Route::get('/answer', ['uses' => 'TestController@answers', 'middleware' => ['auth', 'role:1,3']]);
+Route::get('/testing', ['uses' => 'TestController@testing', 'middleware' => ['auth', 'role:1,3']]);
+
+Route::post('/testing', ['uses' => 'TestController@answers', 'middleware' => ['auth', 'role:1,3']]);
 
 Route::get('/register', ['uses' => 'RegisterController@index', 'middleware' => ['guest']]);
 

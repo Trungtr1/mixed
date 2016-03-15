@@ -22,8 +22,6 @@ use File;
 			
 			$viewData['file'] = DB::table('folders')->where('id',$id)->get();
 
-			$viewData['parent'] = DB::table('folders')->where('id',$viewData['file'][0]['parent'])->get();
-			
 			$viewData['questions'] = DB::table('questions')->where('folder_id',$id)->get();
 			
 			$answers = DB::table('answers')->where('folder_id',$id)->get();			
@@ -32,8 +30,6 @@ use File;
 			{
 				$viewData['answers'][$value['question_id']][] = $value;
 			}
-			
-			
 			return view('file')->with('data',$viewData);
 		}
 		
@@ -86,150 +82,6 @@ use File;
 				}
 				
 			}
-		}
-		
-		public function mixQuestion(Request $request)
-		{
-			$validator = Validator::make($request->all(), [
-				'number_tests' 		=>	'required',
-				'school'			=>  'required',
-				'title'				=>  'required',
-				'subject'			=>	'required',
-				'time'				=>	'required',
-			]);
-			
-			if ($validator->fails()) {
-			
-				return \Redirect::back()
-							->withErrors($validator)
-							->withInput();
-							
-			}else{
-				if($request['file']){
-					$questions = array();
-					
-					$data_questions = array();
-
-					foreach($request['file'] as $key=>$cht)
-					{
-						$get_questions = DB::table('questions')->where('folder_id',$cht)->get();
-						
-						foreach($get_questions as $ge)
-						{
-							$questions[] = $ge['id'];							
-						}
-						
-						$random_questions = array_rand($questions,$request['number_questions'][$key]);
-						
-						foreach($random_questions as $value)
-						{
-							$data_questions[] = $questions[$value];
-						}
-					}
-					
-					$total_questions=0;
-					
-					foreach($request['number_questions'] as $value)
-					{
-						$total_questions=$total_questions+$value;
-					}
-					
-					if(count($data_questions)>=$total_questions)
-					{
-						$user = Session::get('user');
-						
-						$tests = array();
-						
-						/*$random_questions = array_rand($questions,$request['number_questions']);
-						
-						$data_questions = array();										
-						
-						foreach($random_questions as $value)
-						{
-							$data_questions[] = $questions[$value];
-						}*/									
-						
-						for($i=0;$i<$request['number_tests'];$i++)
-						{
-							$tests[] = $this->troncauhoi($data_questions);
-						}
-						
-						DB::table('tests')->where('user_id', $user['id'])->update(array('status' => 0));
-						
-						foreach($tests as $key1=>$value1)
-						{
-							$number_test = $key1+1;
-							
-							$inputData1 = array(
-									'name' 		=> "Đề ".$number_test,
-									'school'	=> $request['school'],
-									'title'		=> $request['title'],
-									'subject'	=> $request['subject'],
-									'time'		=> $request['time'],
-									'date'		=> date('Y-m-d'),
-									'status'	=> 1,
-									'code'		=> rand(101,999),
-									'user_id'	=> $user['id'],
-								);
-							
-							if(DB::table('tests')->insert($inputData1))							
-							{
-								$test_id = DB::getPdo()->lastInsertId();
-							
-								foreach($value1 as $value2)
-								{
-									$get_answers = DB::table('answers')->where('question_id',$value2)->get();
-									
-									$answers = array();
-									
-									foreach($get_answers as $value3)
-									{
-										$answers[] = $value3['id'];
-									}
-									
-									$data_answers = $this->troncauhoi($answers);
-									
-									if($get_answers)
-									{
-										$inputData2 = array(
-														'question_id' 		=> $value2,
-														'test_id'		=> $test_id,
-														);
-									
-										if(DB::table('test_questions')->insert($inputData2))
-										{
-											$test_question_id = DB::getPdo()->lastInsertId();
-											
-											foreach($data_answers as $key2=>$value4)
-											{
-												$inputData3 = array(
-															'test_question_id' 	=> $test_question_id,
-															'answer_id'			=> $value4,
-															'order'				=> $key2,
-															'test_id'			=> $test_id,
-														);
-												DB::table('test_answers')->insert($inputData3);									
-											}
-										}
-									}																
-								}
-							}						
-						}
-						return \Redirect('/test')->with('responseData', array('statusCode' => 1, 'message' => 'Tạo đề thành công'));
-					}else{
-						return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Số lượng câu hỏi không đủ theo yêu cầu.'));
-					}
-				}else{
-					return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Chọn file muốn trộn.'));
-				}
-			}
-		}
-		
-		public function troncauhoi($data)				
-		{			
-			shuffle($data);
-			
-			return $data;
 		}
 		
 		public function uploadQuestion(Request $request) {
