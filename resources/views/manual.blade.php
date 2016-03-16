@@ -38,7 +38,7 @@
 									<ul>
 										<li>Bước 1: ấn vào nút “Tạo thư mục”.</li>
 										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/click_folder.png')}}" alt="..."></li>
-										<li>Bước 2: Nhập tên thư mục và ấn submit.</li>
+										<li>Bước 2: Nhập tên thư mục, chọn chế độ cá nhận (nếu không muốn cho ai xem) hoặc chia sẻ (nếu muốn người khác dc nhìn thấy và sử dụng chung) rồi ấn submit.</li>
 										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/create_folder.png')}}" alt="..."></li>
 										<li>Sau khi ấn “submit” thư mục của bạn vừa tạo sẽ hiện bên dưới</li>
 										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/folder_ss.png')}}" alt="..."></li>
@@ -86,14 +86,17 @@
 									</ul>
 								</li>
 								<li style="margin-top:20px;">
-									<b style="color:#428BCA">TẠO NHÓM</b>
+									<b style="color:#428BCA">Kiểm tra</b>
 									<ul>
-										<li>Bước 1: ấn vào nút “Tạo nhóm.</li>
-										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/click_group.png')}}" alt="..."></li>
-										<li>Bước 2: Điền tên file và ấn “submit”.</li>
-										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/create_group.png')}}" alt="..."></li>
-										<li>Sau khi ấn “submit” file của bạn vừa tạo sẽ hiện bên dưới</li>
-										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/group_ss.png')}}" alt="..."></li>
+										<li>Tạo bài kiểm tra trên nhiều file các bạn thực hiện như sau</li>
+										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/kiemtra1.png')}}" alt="..."></li>
+										<li>Tiếp theo điền đầy đủ thông tin bổ sung vào form dưới đây</li>
+										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/kiemtra2.png')}}" alt="..."></li>
+										<li>Tại đây bài kiểm tra của bạn đã được tạo, bạn chọn vào đáp án bạn cho là đúng</li>
+										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/kiemtra3.png')}}" alt="..."></li>
+										<li>Sau khi làm xong ấn nút nộp bài ở bên dưới</li>
+										<li>Sau khi ấn nộp bài, hệ thống sẽ dựa trên bài kiểm tra của bạn để đánh giá kết quả, đáp án đúng sẽ được tích trong các ô vuông nhỏ</li>
+										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/kiemtra4.png')}}" alt="..."></li>
 									</ul>
 								</li>
 							</ol>
