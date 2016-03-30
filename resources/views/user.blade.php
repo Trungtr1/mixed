@@ -122,7 +122,7 @@
 							<div class="col-lg-5 col-md-5" style="padding:0px">
 								<table style="float:right">
 									<tr>
-										<td><button type="button" class="btn btn-warning" id="btn-test" data-toggle="modal" data-target="#modal_test"><span class="glyphicon glyphicon-refresh"></span> &nbsp;Kiểm tra</button></td>
+										<td><button type="button" class="btn btn-warning" id="btn-test" data-toggle="modal" data-target="#modal_test"><span class="glyphicon glyphicon-refresh"></span> &nbsp;Tạo bài kiểm tra</button></td>
 										<td><button type="button" class="btn btn-danger" id="btn-mix" data-toggle="modal" data-target="#modal_mixed"><span class="glyphicon glyphicon-refresh"></span> &nbsp;Trộn đề</button></td>
 									</tr>
 								</table>
@@ -281,6 +281,13 @@
 														</div>
 														<div class="modal-body">																	
 														<div class="row">
+															<div class="row">
+																<label>Tiêu đề:</label>
+															</div>
+															<div class="row">
+																<input type="text" name="title" class="form-control" value="" />
+															</div>
+															<br/>
 															<div id="list_file2">
 																		
 															</div>
@@ -358,9 +365,14 @@
 						<input type="text" name="name" class="form-control" value="" />
 						<input type="hidden" name="level" class="form-control" value="0" />
 						<input type="hidden" name="parent" class="form-control" value="" />
-						<input type="hidden" name="categories" class="form-control" value="1" />
-						<input type="radio" name="share" value="0" checked="checked" hidden="true"/>
-					</div>					
+						<input type="hidden" name="categories" class="form-control" value="1" />						
+					</div>
+					<br/>
+					<div class="row">
+						<label>Chia sẻ:</label>&nbsp;&nbsp;
+						<input type="radio" name="share" value="0" checked="checked" /> Cá nhân&nbsp;
+						<input type="radio" name="share" value="1" /> Chia sẻ
+					</div>
 				{!! Form::close() !!}
 			</div>
 			<div class="modal-footer">

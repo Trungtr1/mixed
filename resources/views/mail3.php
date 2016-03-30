@@ -1,0 +1,1 @@
+<p>Bài kiểm tra sau đây được gửi tới bạn thông qua hệ thống trộn đề, hãy kích vào đường dẫn sau đây để làm bài kiểm tra ngay nhé <a href="http://localhost/testing?id=<?php echo $test_id ?>">Bài kiểm tra</a></p>

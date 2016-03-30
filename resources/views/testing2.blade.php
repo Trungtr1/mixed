@@ -1,6 +1,6 @@
 @extends('templates.master2')
 
-@section('title', 'Bài kiểm tra')
+@section('title', 'Group')
 
 @section('content')
 
@@ -65,13 +65,12 @@
 				</div>
 			</div>	
 		</div>
-		<br/>
 		<div class="row">
-			<div style="margin-top:10px;" align="center">
+			<div style="margin-top:10px;">
 					<input type="hidden" name="number_questions" value="<?php echo $data['tests'][0]['number_questions'] ?>" />
 					<input type="hidden" name="test_id" value="<?php echo $data['tests'][0]['id'] ?>" />
 					<!--<input type="submit" name="submit" style="height:40px;width:200px;" value="Nộp bài" />-->
-					<button type="button" class="btn btn-primary" style="width:200px;height:50px;" data-toggle="modal" data-target="#modal_info">Nộp bài</button>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_info">Nộp bài</button>
 			</div>
 		</div>
 		{!! Form::close() !!}
@@ -83,6 +82,9 @@
 <script>
 	$(document).on('click','#submit_info',function(){
 		$('#frm-test').submit();
+	})
+	$(document).on('click','#submit_invite',function(){
+		$('#frm_invite').submit();
 	})
 </script>
 @endsection

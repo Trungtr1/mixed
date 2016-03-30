@@ -45,43 +45,19 @@ use File;
 													->join('groups','folders.id','=','groups.folder_id')
 													->where('folders.id',$id)
 													->get();
-				
+
 				$auth = array(							
 							'share'	=>	$viewData['folder'][0]['share']
 				);
-				
+
 				foreach($viewData['folder'] as $value){
 					$auth['user'][]=$value['user_id'];
-				}				
-				
-				if($auth['share']==0){	
-					
-					if(in_array($user['id'],$auth['user'])){
-					
-						$viewData['subfolder'] = DB::table('folders')->where('parent',$id)->where('categories',0)->get();
-				
-						$viewData['subfile'] = DB::table('folders')
-														->select(DB::raw('count(questions.id) as count, folders.id, folders.name, folders.date, folders.share'))
-														->join('questions','folders.id','=','questions.folder_id','LEFT')
-														->where('parent',$id)
-														->where('categories',1)
-														->groupBy('folders.id','folders.name','folders.date','folders.share')
-														->get();
-														
-						return view('folder')->with('data',$viewData);
-					
-					}else{
-						
-						echo "Đây là thư mục cá nhân không chia sẻ, bạn không có quyền truy cập thư mục này.";
-					
-					}
+				}		
 
-				}else{
-					
-					if(in_array($user['id'],$auth['user'])){
-						
+				if(in_array($user['id'],$auth['user'])){
+
 						$viewData['subfolder'] = DB::table('folders')->where('parent',$id)->where('categories',0)->get();
-				
+
 						$viewData['subfile'] = DB::table('folders')
 														->select(DB::raw('count(questions.id) as count, folders.id, folders.name, folders.date, folders.share'))
 														->join('questions','folders.id','=','questions.folder_id','LEFT')
@@ -96,10 +72,16 @@ use File;
 														->where('groups.folder_id',$id)
 														->get();
 						
-						return view('group')->with('data',$viewData);												
+						return view('folder')->with('data',$viewData);
+			
+				}else{
+					
+					if($auth['share']==0){	
+						
+						echo "Bạn không có quyền truy cập thư mục này";
 						
 					}else{
-
+						
 						$viewData['subfolder'] = DB::table('folders')->where('parent',$id)->where('categories',0)->get();
 			
 						$viewData['subfile'] = DB::table('folders')
@@ -116,13 +98,12 @@ use File;
 														->where('groups.folder_id',$id)
 														->get();										
 														
-						return view('group_guest')->with('data',$viewData);
-						
-						
+						return view('view_folder')->with('data',$viewData);
+
 					}
 					
 				}
-
+				
 			}else{
 
 				$viewData['folders'] = DB::table('groups')

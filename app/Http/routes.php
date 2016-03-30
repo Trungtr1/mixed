@@ -66,9 +66,9 @@ Route::get('/test', ['uses' => 'TestController@index', 'middleware' => ['auth', 
 
 Route::post('/test', ['uses' => 'TestController@download_test', 'middleware' => ['auth', 'role:1,3']]);
 
-Route::get('/testing', ['uses' => 'TestController@testing', 'middleware' => ['auth', 'role:1,3']]);
+Route::get('/testing', ['uses' => 'TestController@testing']);
 
-Route::post('/testing', ['uses' => 'TestController@answers', 'middleware' => ['auth', 'role:1,3']]);
+Route::post('/testing', ['uses' => 'TestController@nopbai']);
 
 Route::get('/register', ['uses' => 'RegisterController@index', 'middleware' => ['guest']]);
 
@@ -83,3 +83,13 @@ Route::get('/admin', ['uses' => 'AdminController@index', 'middleware' => ['auth'
 Route::get('/account', ['uses' => 'UserController@account', 'middleware' => ['auth', 'role:1,3']]);
 
 Route::post('/account', ['as' => 'edit.account', 'uses' => 'UserController@editaccount', 'middleware' => ['auth', 'role:1,3']]);
+
+Route::get('/bai-kiem-tra', ['uses' => 'UserController@baikiemtra', 'middleware' => ['auth', 'role:1,3']]);
+
+Route::post('/bai-kiem-tra', ['uses' => 'UserController@sendtest', 'middleware' => ['auth', 'role:1,3']]);
+
+Route::get('/kho-bai-kiem-tra', ['uses' => 'UserController@storage_test', 'middleware' => ['auth', 'role:1,3']]);
+
+Route::get('/bai-nop', ['uses' => 'UserController@bainop', 'middleware' => ['auth', 'role:1,3']]);
+
+Route::get('/cham-bai', ['uses' => 'TestController@chambai', 'middleware' => ['auth', 'role:1,3']]);

@@ -313,6 +313,7 @@ use File;
 		{
 
 			$validator = Validator::make($request->all(), [
+				'title'					=>	'required',
 				'file' 					=>	'required',
 				'number_questions'		=>  'required',
 				'ipt_total_question'	=>  'required',
@@ -371,7 +372,7 @@ use File;
 							$inputData1 = array(
 									'name' 		=> "Đề ".$number_test,
 									'school'	=> '',
-									'title'		=> '',
+									'title'		=> $request['title'],
 									'subject'	=> '',
 									'time'		=> '',
 									'date'		=> date('Y-m-d'),
@@ -424,7 +425,7 @@ use File;
 								}
 							}						
 						}
-						return \Redirect('/testing')->with('responseData', array('statusCode' => 1, 'message' => 'Tạo bài kiểm tra thành công thành công'));
+						return \Redirect('/bai-kiem-tra')->with('responseData', array('statusCode' => 1, 'message' => 'Tạo bài kiểm tra thành công thành công'));
 					}else{
 						return \Redirect::back()->withInput()->with('responseData', array('statusCode' => 2, 'message' => 'Số lượng câu hỏi không đủ theo yêu cầu.'));
 					}
