@@ -99,6 +99,22 @@
 										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/kiemtra4.png')}}" alt="..."></li>
 									</ul>
 								</li>
+								<li style="margin-top:20px;">
+									<b style="color:#428BCA">Tạo bài kiểm tra</b>
+									<ul>
+										<li>Tạo bài kiểm tra trên nhiều file các bạn thực hiện như sau</li>
+										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/sendtest1.PNG')}}" alt="..."></li>
+										<li>Tiếp theo điền đầy đủ thông tin bổ sung vào form dưới đây</li>
+										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/sendtest2.PNG')}}" alt="..."></li>
+										<li>Sau khi ấn tạo bài kiểm tra các bạn sẽ được chuyển đến thư mục chứa các bài kiểm tra bạn đã tạo, ở đây bạn tìm bài kiểm tra mình vừa tạo theo tiêu đề đã đặt rồi ấn gửi bài</li>
+										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/sendtest3.PNG')}}" alt="..."></li>
+										<li>Ở đây các bạn có thể chọn gửi bài kiểm tra cho 1 người hoặc nhiều người</li>
+										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/sendtest4.PNG')}}" alt="..."></li>
+										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/sendtest5.PNG')}}" alt="..."></li>
+										<li>Đây là mẫu file email</li>
+										<li style="list-style-type:none;"><img style="width:100%" src="{{asset('public/img/huongdansudung/sendtest6.PNG')}}" alt="..."></li>
+									</ul>
+								</li>
 							</ol>
 						</div>
 					</div>
